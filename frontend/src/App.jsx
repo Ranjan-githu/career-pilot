@@ -3,15 +3,9 @@
  * Main Application Component with Route-based Code Splitting
  * Implements lazy loading for improved performance
  */
-import CoverLetter from "./pages/CoverLetter";
-import VercelDeploy from "./components/portfolio/templates/Vercel_Deploy/index";
 import React, { useState, useEffect, lazy, Suspense } from 'react';
-import StockTicker from "./components/portfolio/templates/Finance_Corporate/StockTicker";
-import Deployments from './pages/Deployments'
-import TemplateGallery from "./pages/TemplateGallery";
-import TemplatePreviewOnly from "./pages/TemplatePreviewOnly";
 
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './context/AuthProvider';
 import { useAuth } from './hooks/useAuth';
@@ -23,16 +17,52 @@ import Footer from './components/ui/Footer';
 import CommandPalette from './components/CommandPalette';
 import BackToTop from './components/BackToTop';
 import Home from './pages/Home';
+const CoverLetter = lazy(() => import("./pages/CoverLetter"));
+const Deployments = lazy(() => import("./pages/Deployments"));
+const TemplateGallery = lazy(() => import("./pages/TemplateGallery"));
+const TemplatePreviewOnly = lazy(() => import("./pages/TemplatePreviewOnly"));
+const TextToResume = lazy(() => import("./pages/TextToResume"));
+const About = lazy(() => import("./components/portfolio/templates/Tech_Startup/About"));
+const ChatbotPortfolio = lazy(() => import("./components/portfolio/templates/Chatbot_Portfolio"));
+const GlassmorphismTemplate = lazy(() => import("./components/portfolio/templates/Glassmorphism/index"));
+const JobTracker = lazy(() => import("./pages/JobTracker"));
+const TestSocialLinks = lazy(() => import("./pages/TestSocialLinks"));
+const NorthernFjords = lazy(() => import("./components/portfolio/templates/Northern_Fjords"));
+const RainforestCanopy = lazy(() => import("./components/portfolio/templates/Rainforest_Canopy/index.jsx"));
+const DuotoneBold = lazy(() => import("./components/portfolio/templates/Duotone_Bold/index.jsx"));
+const ChromaticGlitch = lazy(() => import("./components/portfolio/templates/Chromatic_Glitch/index.jsx"));
+const SwissTypography = lazy(() => import("./components/portfolio/templates/Swiss_Typography/index.jsx"));
+const DesertDunes = lazy(() => import("./components/portfolio/templates/Desert_Dunes/index.jsx"));
+const PsychedelicSwirl = lazy(() => import("./components/portfolio/templates/Psychedelic_Swirl/index.jsx"));
+const MemphisPop = lazy(() => import("./components/portfolio/templates/Memphis_Pop/index.jsx"));
+const HiddenEasterEggScavengerHunt = lazy(() => import("./components/portfolio/templates/Hidden_Easter_Egg_Scavenger_Hunt/index.jsx"));
+const CassetteMixtape = lazy(() => import("./components/portfolio/templates/Cassette_Mixtape/index.jsx"));
+const MagneticDock = lazy(() => import("./components/portfolio/templates/Magnetic_Dock/index.jsx"));
+const ColorBlock = lazy(() => import("./components/portfolio/templates/Color_Block/index.jsx"));
+const OceanDepths = lazy(() => import("./components/portfolio/templates/Ocean_Depths/index.jsx"));
+const NeonCityscape = lazy(() => import("./components/portfolio/templates/Neon_Cityscape/index.jsx"));
+const PlanetaryOrbit = lazy(() => import("./components/portfolio/templates/Planetary_Orbit/index.jsx"));
+const LowPolyTerrain = lazy(() => import("./components/portfolio/templates/Low_Poly_Terrain/index.jsx"));
+const HighFashion = lazy(() => import("./components/portfolio/templates/High_Fashion/index.jsx"));
+const TypographicWheatpastePosterWall = lazy(() => import("./components/portfolio/templates/Typographic_Wheatpaste_Poster_Wall/index.jsx"));
+const DigitalManifestoScroll = lazy(() => import("./components/portfolio/templates/Digital_Manifesto_Scroll/index.jsx"));
+const ZineCollage = lazy(() => import("./components/portfolio/templates/ZineCollage"));
+const TransparentDesktopOverlayOS = lazy(() => import("./components/portfolio/templates/Transparent_Desktop_Overlay_OS/index.jsx"));
+const CommercialPilotCockpit = lazy(() => import("./components/portfolio/templates/Commercial_Pilot_Cockpit/index.jsx"));
+const BookPageFlip3DRender = lazy(() => import("./components/portfolio/templates/Book_Page_Flip_3D_Render/index.jsx"));
+const IKEAAssemblyManual = lazy(() => import("./components/portfolio/templates/IKEA_Assembly_Manual/index.jsx"));
+const MichelinStarChefPlating = lazy(() => import("./components/portfolio/templates/Michelin_Star_Chef_Plating/index.jsx"));
+const SommelierWineCellarRacks = lazy(() => import("./components/portfolio/templates/Sommelier_Wine_Cellar_Racks/index.jsx"));
+const MinimalDarkFluid = lazy(() => import("./components/portfolio/templates/Minimal_Dark_Fluid/index.jsx"));
+const TerminalSkills = lazy(() => import("./components/portfolio/templates/Terminal_Skills/index.jsx"));
+const ChiragChrgTheme = lazy(() => import("./components/portfolio/templates/ChiragChrg_Theme/index.jsx"));
+const InspiredDevJadiya = lazy(() => import("./components/portfolio/templates/Inspired_Dev_Jadiya"));
+const FilmDirectorClapperboard = lazy(() => import("./components/portfolio/templates/Film_Director_Clapperboard/index.jsx"));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Analytics = lazy(() => import('./pages/Analytics'));
 const JobSearch = lazy(() => import('./pages/JobSearch'));
 const ResumeBuilder = lazy(() => import('./pages/ResumeBuilder'));
-import TextToResume from './pages/TextToResume';
-import About from './components/portfolio/templates/Tech_Startup/About';
-import ChatbotPortfolio from "./components/portfolio/templates/Chatbot_Portfolio";
-import GlassmorphismTemplate from "./components/portfolio/templates/Glassmorphism/index";
 
-import JobTracker from './pages/JobTracker';
 
 const Community = lazy(() => import('./pages/Community'));
 const Login = lazy(() => import("./pages/Login"));
@@ -58,6 +88,10 @@ const PortfolioGithub = lazy(() => import('./pages/PortfolioGithub'));
 const GithubPortfolioHub = lazy(() => import('./pages/hubs/GithubPortfolioHub'));
 const GithubCallback = lazy(() => import('./pages/auth/GithubCallback'));
 const SkillGap = lazy(() => import("./pages/SkillGap"));
+const SalaryEstimate = lazy(() => import("./pages/SalaryEstimate"));
+const EmailGenerator = lazy(() => import("./pages/EmailGenerator"));
+const CareerPath = lazy(() => import("./pages/CareerPath"));
+const Outreach = lazy(() => import("./pages/Outreach"));
 const ResumeHub = lazy(() => import("./pages/hubs/ResumeHub"));
 const JobsHub = lazy(() => import("./pages/hubs/JobsHub"));
 const PortfolioHub = lazy(() => import("./pages/hubs/PortfolioHub"));
@@ -101,6 +135,7 @@ const RepoAnalyzerDashboard = lazy(() => import('./pages/RepoAnalyzer/Dashboard'
 const RepoAnalyzerWorkspace = lazy(() => import('./pages/RepoAnalyzer/Workspace'));
 const LegacyProjectVisualizerLanding = lazy(() => import('./pages/ProjectVisualizer/Landing'));
 const ProjectVisualizerDashboard = lazy(() => import('./pages/ProjectVisualizer/Dashboard'));
+const ProjectVisualizerWorkspace = lazy(() => import('./pages/ProjectVisualizer/Workspace'));
 
 const ResumeBuilderLanding = lazy(() => import('./pages/features/ResumeBuilderLanding'));
 const PortfolioBuilderLanding = lazy(() => import('./pages/features/PortfolioBuilderLanding'));
@@ -110,42 +145,10 @@ const ProjectVisualizerLanding = lazy(() => import('./pages/features/ProjectVisu
 const JobFinderLanding = lazy(() => import('./pages/features/JobFinderLanding'));
 const MockInterviewLanding = lazy(() => import('./pages/features/MockInterviewLanding'));
 const RecruitersLanding = lazy(() => import('./pages/features/RecruitersLanding'));
+const GithubReadmeGeneratorLanding = lazy(() => import('./pages/features/GithubReadmeGeneratorLanding'));
 const GithubReadmeGenerator = lazy(() => import('./pages/GithubReadmeGenerator'));
 
 import ScrollToTop from "./components/ScrollToTop";
-import NorthernFjords from './components/portfolio/templates/Northern_Fjords';
-import RainforestCanopy from './components/portfolio/templates/Rainforest_Canopy/index.jsx';
-import DuotoneBold from './components/portfolio/templates/Duotone_Bold/index.jsx';
-import ChromaticGlitch from './components/portfolio/templates/Chromatic_Glitch/index.jsx';
-import SwissTypography from './components/portfolio/templates/Swiss_Typography/index.jsx';
-import DesertDunes from './components/portfolio/templates/Desert_Dunes/index.jsx';
-import PsychedelicSwirl from './components/portfolio/templates/Psychedelic_Swirl/index.jsx';
-import MemphisPop from './components/portfolio/templates/Memphis_Pop/index.jsx';
-import HiddenEasterEggScavengerHunt from './components/portfolio/templates/Hidden_Easter_Egg_Scavenger_Hunt/index.jsx';
-import CassetteMixtape from './components/portfolio/templates/Cassette_Mixtape/index.jsx';
-import MagneticDock from './components/portfolio/templates/Magnetic_Dock/index.jsx';
-import Hero from './components/portfolio/templates/Magazine_Editorial/Hero';
-import ColorBlock from './components/portfolio/templates/Color_Block/index.jsx';
-import OceanDepths from './components/portfolio/templates/Ocean_Depths/index.jsx';
-import NeonCityscape from './components/portfolio/templates/Neon_Cityscape/index.jsx';
-import PlanetaryOrbit from './components/portfolio/templates/Planetary_Orbit/index.jsx';
-import LowPolyTerrain from './components/portfolio/templates/Low_Poly_Terrain/index.jsx';
-import HighFashion from './components/portfolio/templates/High_Fashion/index.jsx';
-import TypographicWheatpastePosterWall from './components/portfolio/templates/Typographic_Wheatpaste_Poster_Wall/index.jsx';
-import DigitalManifestoScroll from './components/portfolio/templates/Digital_Manifesto_Scroll/index.jsx';
-import TestSocialLinks from './pages/TestSocialLinks';
-import ZineCollage from './components/portfolio/templates/ZineCollage';
-import TransparentDesktopOverlayOS from './components/portfolio/templates/Transparent_Desktop_Overlay_OS/index.jsx';
-import Commercial_Pilot_Cockpit from './components/portfolio/templates/Commercial_Pilot_Cockpit/index.jsx';
-import Book_Page_Flip_3D_Render from './components/portfolio/templates/Book_Page_Flip_3D_Render/index.jsx';
-import IKEA_Assembly_Manual from './components/portfolio/templates/IKEA_Assembly_Manual/index.jsx';
-import MichelinStarChefPlating from './components/portfolio/templates/Michelin_Star_Chef_Plating/index.jsx';
-import SommelierWineCellarRacks from './components/portfolio/templates/Sommelier_Wine_Cellar_Racks/index.jsx';
-import MinimalDarkFluid from './components/portfolio/templates/Minimal_Dark_Fluid/index.jsx';
-import TerminalSkills from './components/portfolio/templates/Terminal_Skills/index.jsx';
-import ChiragChrgTheme from './components/portfolio/templates/ChiragChrg_Theme/index.jsx';
-import InspiredDevJadiya from "./components/portfolio/templates/Inspired_Dev_Jadiya";
-import Film_Director_Clapperboard from './components/portfolio/templates/Film_Director_Clapperboard/index.jsx';
 
 function LoadingScreen({ label }) {
   return (
@@ -161,6 +164,7 @@ function LoadingScreen({ label }) {
 
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
+  const location = useLocation();
 
   if (loading) {
     return (
@@ -174,7 +178,15 @@ function ProtectedRoute({ children }) {
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    // Remember where the user was headed so sign-in can return them there
+    // instead of dumping them on the dashboard.
+    return (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: `${location.pathname}${location.search}` }}
+      />
+    );
   }
 
   return <AppLayout>{children}</AppLayout>;
@@ -285,7 +297,10 @@ function AppRoutes() {
         <Route path="/job-finder" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><JobFinderLanding /></Suspense>} />
         <Route path="/mock-interview" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><MockInterviewLanding /></Suspense>} />
         <Route path="/recruiters" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><RecruitersLanding /></Suspense>} />
-                <Route path="/readme-generator" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><GithubReadmeGenerator /></Suspense>} />
+                <Route path="/readme-generator" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><GithubReadmeGeneratorLanding /></Suspense>} />
+        <Route path="/readme-generator/generate" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading README Generator..." />}><GithubReadmeGenerator /></Suspense></ProtectedRoute>} />
+
+        <Route path="/project-visualizer/analyze" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Project Visualizer..." />}><ProjectVisualizerWorkspace /></Suspense></ProtectedRoute>} />
 
         {/* Legacy Landing Redirects */}
         <Route path="/resume-builder-landing" element={<Navigate to="/resume-builder" replace />} />
@@ -295,52 +310,52 @@ function AppRoutes() {
 
         {/* Legal Pages (Public) */}
         <Route path="/privacy" element={<Suspense fallback={null}><PrivacyPolicy /></Suspense>} />
-        <Route path="/about" element={<Suspense fallback={<LoadingScreen label="Loading About..." />}><About /></Suspense>} />
+        <Route path="/about" element={<Suspense fallback={<LoadingScreen label="Loading About..." />}><Suspense fallback={<LoadingScreen label="Loading..." />}><About /></Suspense></Suspense>} />
         <Route path="/terms" element={<Suspense fallback={null}><TermsOfService /></Suspense>} />
         <Route path="/cookies" element={<Suspense fallback={null}><CookiePolicy /></Suspense>} />
 
         {/* Template Gallery Route (Registered at /templates) */}
-        <Route path="/templates" element={<TemplateGallery />} />
-        <Route path="/preview/:templateId" element={<TemplatePreviewOnly />} />
-        <Route path="/preview-inspired-dev-jadiya" element={<InspiredDevJadiya />} />
-        <Route path="/cover-letter" element={<CoverLetter />} />
+        <Route path="/templates" element={<Suspense fallback={<LoadingScreen label="Loading Templates..." />}><TemplateGallery /></Suspense>} />
+        <Route path="/preview/:templateId" element={<Suspense fallback={<LoadingScreen label="Loading Preview..." />}><TemplatePreviewOnly /></Suspense>} />
+        <Route path="/preview-inspired-dev-jadiya" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><InspiredDevJadiya /></Suspense>} />
+        <Route path="/cover-letter" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><CoverLetter /></Suspense>} />
 
 
         {/* <Route path="/templates/day-night-cycle" element={<DayNightCycle />} /> */}
 
-        <Route path="/templates/rainforest-canopy" element={<RainforestCanopy />} />
-        <Route path="/templates/northern-fjords" element={<NorthernFjords />} />
-        <Route path="/templates/duotone-bold" element={<DuotoneBold />} />
-        <Route path="/templates/chromatic-glitch" element={<ChromaticGlitch />} />
-        <Route path="/templates/swiss-typography" element={<SwissTypography />} />
+        <Route path="/templates/rainforest-canopy" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><RainforestCanopy /></Suspense>} />
+        <Route path="/templates/northern-fjords" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><NorthernFjords /></Suspense>} />
+        <Route path="/templates/duotone-bold" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><DuotoneBold /></Suspense>} />
+        <Route path="/templates/chromatic-glitch" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><ChromaticGlitch /></Suspense>} />
+        <Route path="/templates/swiss-typography" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><SwissTypography /></Suspense>} />
 
-        <Route path="/templates/desert-dunes" element={<DesertDunes />} />
-        <Route path="/templates/psychedelic-swirl" element={<PsychedelicSwirl />} />
-        <Route path="/templates/memphis-pop" element={<MemphisPop />} />
-        <Route path="/templates/cassette-mixtape" element={<CassetteMixtape />} />
-        <Route path="/templates/hidden-easter-egg-scavenger-hunt" element={<HiddenEasterEggScavengerHunt />} />
-        <Route path="/templates/magnetic-dock" element={<MagneticDock />} />
-        <Route path="/templates/ocean-depths" element={<OceanDepths />} />
-        <Route path="/templates/neon-cityscape" element={<NeonCityscape />} />
-        <Route path="/templates/planetary-orbit" element={<PlanetaryOrbit />} />
-        <Route path="/templates/low-poly-terrain" element={<LowPolyTerrain />} />
-        <Route path="/templates/high-fashion" element={<HighFashion />} />
-        <Route path="/templates/typographic-wheatpaste-poster-wall" element={<TypographicWheatpastePosterWall />} />
-        <Route path="/templates/digital-manifesto-scroll" element={<DigitalManifestoScroll />} />
+        <Route path="/templates/desert-dunes" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><DesertDunes /></Suspense>} />
+        <Route path="/templates/psychedelic-swirl" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><PsychedelicSwirl /></Suspense>} />
+        <Route path="/templates/memphis-pop" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><MemphisPop /></Suspense>} />
+        <Route path="/templates/cassette-mixtape" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><CassetteMixtape /></Suspense>} />
+        <Route path="/templates/hidden-easter-egg-scavenger-hunt" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><HiddenEasterEggScavengerHunt /></Suspense>} />
+        <Route path="/templates/magnetic-dock" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><MagneticDock /></Suspense>} />
+        <Route path="/templates/ocean-depths" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><OceanDepths /></Suspense>} />
+        <Route path="/templates/neon-cityscape" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><NeonCityscape /></Suspense>} />
+        <Route path="/templates/planetary-orbit" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><PlanetaryOrbit /></Suspense>} />
+        <Route path="/templates/low-poly-terrain" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><LowPolyTerrain /></Suspense>} />
+        <Route path="/templates/high-fashion" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><HighFashion /></Suspense>} />
+        <Route path="/templates/typographic-wheatpaste-poster-wall" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><TypographicWheatpastePosterWall /></Suspense>} />
+        <Route path="/templates/digital-manifesto-scroll" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><DigitalManifestoScroll /></Suspense>} />
 
-        <Route path="/templates/zine-collage" element={<ZineCollage />} />
-        <Route path="/templates/chatbot" element={<ChatbotPortfolio />} />
-        <Route path="/templates/glassmorphism" element={<GlassmorphismTemplate />} />
-        <Route path="/templates/transparent-desktop-overlay-os" element={<TransparentDesktopOverlayOS />} />
-        <Route path="/templates/commercial-pilot-cockpit" element={<Commercial_Pilot_Cockpit />} />
-        <Route path="/templates/book-page-flip-3d-render" element={<Book_Page_Flip_3D_Render />} />
-        <Route path="/templates/ikea-assembly-manual" element={<IKEA_Assembly_Manual />} />
-        <Route path="/templates/michelin-star-chef-plating" element={<MichelinStarChefPlating />} />
-        <Route path="/templates/sommelier-wine-cellar-racks" element={<SommelierWineCellarRacks />} />
-        <Route path="/templates/minimal-dark-fluid" element={<MinimalDarkFluid />} />
-        <Route path="/templates/terminal-skills" element={<TerminalSkills />} />
-        <Route path="/templates/chiragchrg-theme" element={<ChiragChrgTheme />} />
-        <Route path="/templates/film-director-clapperboard" element={<Film_Director_Clapperboard />} />
+        <Route path="/templates/zine-collage" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><ZineCollage /></Suspense>} />
+        <Route path="/templates/chatbot" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><ChatbotPortfolio /></Suspense>} />
+        <Route path="/templates/glassmorphism" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><GlassmorphismTemplate /></Suspense>} />
+        <Route path="/templates/transparent-desktop-overlay-os" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><TransparentDesktopOverlayOS /></Suspense>} />
+        <Route path="/templates/commercial-pilot-cockpit" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><CommercialPilotCockpit /></Suspense>} />
+        <Route path="/templates/book-page-flip-3d-render" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><BookPageFlip3DRender /></Suspense>} />
+        <Route path="/templates/ikea-assembly-manual" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><IKEAAssemblyManual /></Suspense>} />
+        <Route path="/templates/michelin-star-chef-plating" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><MichelinStarChefPlating /></Suspense>} />
+        <Route path="/templates/sommelier-wine-cellar-racks" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><SommelierWineCellarRacks /></Suspense>} />
+        <Route path="/templates/minimal-dark-fluid" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><MinimalDarkFluid /></Suspense>} />
+        <Route path="/templates/terminal-skills" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><TerminalSkills /></Suspense>} />
+        <Route path="/templates/chiragchrg-theme" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><ChiragChrgTheme /></Suspense>} />
+        <Route path="/templates/film-director-clapperboard" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><FilmDirectorClapperboard /></Suspense>} />
         {/* Core Protected Routes */}
         <Route
           path="/dashboard"
@@ -382,9 +397,8 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
-        <Route path="/text-to-resume" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Text to Resume..." />}><TextToResume /></Suspense></ProtectedRoute>} />
+        <Route path="/text-to-resume" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Text to Resume..." />}><Suspense fallback={<LoadingScreen label="Loading..." />}><TextToResume /></Suspense></Suspense></ProtectedRoute>} />
         <Route path="/enhance/:resumeId" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Resume Enhancer..." />}><Enhance /></Suspense></ProtectedRoute>} />
-        <Route path="/shared/:shareToken" element={<SharedResumeView />} />
         <Route path="/resume/:resumeId" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Resume..." />}><ResumeView /></Suspense></ProtectedRoute>} />
         <Route path="/resume-templates" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Templates..." />}><ResumeTemplates /></Suspense></ProtectedRoute>} />
         <Route path="/resume-examples" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Examples..." />}><ResumeExamples /></Suspense></ProtectedRoute>} />
@@ -400,8 +414,9 @@ function AppRoutes() {
         />
         {/* Legacy redirect for jobs */}
         <Route path="/jobs" element={<Navigate to="/job-finder/search" replace />} />
+        <Route path="/portfolio-builder/templates" element={<Navigate to="/templates" replace />} />
         <Route path="/job-alerts" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Job Alerts..." />}><JobAlerts /></Suspense></ProtectedRoute>} />
-        <Route path="/job-tracker" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Job Tracker..." />}><JobTracker /></Suspense></ProtectedRoute>} />
+        <Route path="/job-tracker" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Job Tracker..." />}><Suspense fallback={<LoadingScreen label="Loading..." />}><JobTracker /></Suspense></Suspense></ProtectedRoute>} />
         <Route
           path="/community"
           element={
@@ -441,7 +456,11 @@ function AppRoutes() {
         <Route path="/security" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Security Settings..." />}><SecuritySettings /></Suspense></ProtectedRoute>} />
         <Route path="/linkedin-optimizer" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading LinkedIn Optimizer..." />}><LinkedInOptimizer /></Suspense></ProtectedRoute>} />
         <Route path="/skill-gap" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Skill Gap Analyzer..." />}><SkillGap /></Suspense></ProtectedRoute>} />
-        <Route path="/deployments" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Deployments..." />}><Deployments /></Suspense></ProtectedRoute>} />
+        <Route path="/salary-estimate" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Salary Estimator..." />}><SalaryEstimate /></Suspense></ProtectedRoute>} />
+        <Route path="/email-generator" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Email Generator..." />}><EmailGenerator /></Suspense></ProtectedRoute>} />
+        <Route path="/career-path" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Career Trajectory..." />}><CareerPath /></Suspense></ProtectedRoute>} />
+        <Route path="/outreach" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Cold Outreach..." />}><Outreach /></Suspense></ProtectedRoute>} />
+        <Route path="/deployments" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Deployments..." />}><Suspense fallback={<LoadingScreen label="Loading..." />}><Deployments /></Suspense></Suspense></ProtectedRoute>} />
         <Route path="/resume-roast/analyze" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading Resume Roast..." />}><ResumeRoast /></Suspense></ProtectedRoute>} />
         <Route path="/github-portfolio/build" element={<ProtectedRoute><Suspense fallback={<LoadingScreen label="Loading GitHub Portfolio Builder..." />}><PortfolioGithub /></Suspense></ProtectedRoute>} />
         {/* Legacy redirects */}
@@ -518,14 +537,6 @@ function AppRoutes() {
         <Route path="/repo-analyzer/dashboard" element={<Navigate to="/project-visualizer" replace />} />
         <Route path="/repo-analyzer/workspace" element={<Navigate to="/project-visualizer" replace />} />
         <Route
-          path="/project-visualizer"
-          element={
-            <Suspense fallback={<LoadingScreen label="Loading..." />}>
-              <ProjectVisualizerLanding />
-            </Suspense>
-          }
-        />
-        <Route
           path="/project-visualizer-legacy"
           element={
             <Navigate to="/project-visualizer" replace />
@@ -559,12 +570,12 @@ function AppRoutes() {
         </Route>
 
 
-        <Route path="/test-social-links" element={<Suspense fallback={<LoadingScreen label="Loading Test Social Links..." />}><TestSocialLinks /></Suspense>} />
+        <Route path="/test-social-links" element={<Suspense fallback={<LoadingScreen label="Loading Test Social Links..." />}><Suspense fallback={<LoadingScreen label="Loading..." />}><TestSocialLinks /></Suspense></Suspense>} />
 
 
         {/* Catch-All Route */}
+        <Route path="/templates/color-block" element={<Suspense fallback={<LoadingScreen label="Loading..." />}><ColorBlock /></Suspense>} />
         <Route path="*" element={<NotFound />} />
-        <Route path="/templates/color-block" element={<ColorBlock />} />
       </Routes>
     </BrowserRouter>
   );
