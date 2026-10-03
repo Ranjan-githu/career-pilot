@@ -1,3 +1,10 @@
+# [1.276.0](https://github.com/anurag3407/career-pilot/compare/v1.275.1...v1.276.0) (2026-10-03)
+
+
+### Features
+
+* add salary estimator, outreach generator, career trajectory & visualizer workspace ([58e6911](https://github.com/anurag3407/career-pilot/commit/58e6911efb70de3a49c94959fedab422bc49344f))
+
 ## [1.275.1](https://github.com/anurag3407/career-pilot/compare/v1.275.0...v1.275.1) (2026-08-07)
 
 
