@@ -5,7 +5,7 @@ const projectAnalysisSchema = new mongoose.Schema({
   repoUrl: { type: String, required: true },
   repoName: { type: String },
   repoOwner: { type: String },
-  sessionId: { type: String, unique: true },
+  sessionId: { type: String, unique: true, sparse: true },
   status: { type: String, enum: ['analyzing', 'complete', 'failed'], default: 'analyzing' },
   stats: {
     totalFiles: Number,
@@ -59,7 +59,6 @@ const projectAnalysisSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 projectAnalysisSchema.index({ userId: 1, repoUrl: 1 });
-projectAnalysisSchema.index({ sessionId: 1 });
 projectAnalysisSchema.index({ expiresAt: 1 }, { expireAfterSeconds: 0 });
 
 export default mongoose.model('ProjectAnalysis', projectAnalysisSchema);
